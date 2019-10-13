@@ -1,5 +1,5 @@
 # regdata
-A repository for important data sources on the regulatory state. Collaboration welcome. We need content for downloading and parsing content. Ideally, final output will be in the form of sqlite databases that can be easily shared and queried. What follows is notes on data sources that we know about and are working on acquiring.
+A repository for important data sources on the regulatory state. Collaboration welcome. We are working on scripts for downloading and parsing content put out aobut federal rulemaking and related issues in US bureaucratic politics. Ideally, final output will be in the form of sqlite databases that can be easily shared and queried. What follows is notes on data sources that we know about and are working on acquiring.
 
 ## Federal Register
 
