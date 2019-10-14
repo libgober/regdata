@@ -22,13 +22,14 @@ CURRENT STATUS
 
 ## Unified Agenda of Regulatory and Deregulatory Actions
 
-XML versions available from 1995 until present
+Major source is XML versions available from 1995 until present
 
 https://www.reginfo.gov/public/do/eAgendaXmlReport
 
 CURRENT STATUS
 
-- All XMLs available in repository.
+- Bash script to download all these XMLs is in the directory.
+- Partial transformation to SQLITE database is complete. Available here: https://www.dropbox.com/s/wnw5husrx7lpagw/agenda.sqlite?dl=0
 
 ## Regulations.gov (for comments)
 
