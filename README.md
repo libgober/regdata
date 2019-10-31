@@ -9,6 +9,8 @@ Because of the constraints on large files, we are investigating options for stor
 - Steven Rashin, Postdoc in Government at Harvard.
 - Devin Judge-Lord, PhD Candidate in Political Science at UW-Madison.
 
+## Data Sources
+To access the data discusses in our paper 'Data and Methods Analyzing Special Interests Influence in Rulemaking' see the file data_sources.md in the menu above.
 
 ## Federal Register
 
