@@ -6,7 +6,7 @@ Because of the constraints on large files, we are investigating options for stor
 # Authors
 
 - Brian Libgober, Postdoc in Political Science at Yale (brian.libgober@yale.edu).
-- Steven Rashin, Postdoc in Government at Harvard.
+- Steven Rashin, Visiting Scholar at Harvard (steven_rashin@radcliffe.harvard.edu).
 - Devin Judge-Lord, PhD Candidate in Political Science at UW-Madison (JudgeLord@wisc.edu).
 
 ## Data Sources
