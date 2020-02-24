@@ -96,15 +96,16 @@ def agency_definitions(root):
     So this is an example of flattanable XML
     """
     AGENCIES = root.findall("./RIN_INFO/AGENCY")
-    PARENT_AGENCIES = root.findall("./RIN_INFO/PARENT_AGENCY")
     foo = set()
-    for a,p in zip(AGENCIES,PARENT_AGENCIES):
-        entry=map(lambda x: clean_element(a.find(x)),['CODE','NAME','ACRONYM'])  +\
-            map(lambda y: clean_element(p.find(y)),['CODE','NAME','ACRONYM'])
+    for a in AGENCIES:
+        p=a.getparent().find('PARENT_AGENCY')
+        entry=map(lambda x: clean_element(a.find(x)),['CODE','NAME','ACRONYM'])
+        if p is not None:
+            entry=entry+map(lambda y: clean_element(p.find(y)),['CODE','NAME','ACRONYM'])
         foo.add(tuple(entry))
     out = pd.DataFrame(list(foo),columns=["CODE","NAME","ACRONYM",'PARENT_CODE','PARENT_NAME',"PARENT_ACRONYM"])
     out['PUBLICATION_ID'] = identify_publication_id(root)
-    return out    
+    return out  
 
 def legal_authories(RIN_INFO):
     """
