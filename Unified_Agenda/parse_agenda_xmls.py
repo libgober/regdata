@@ -31,6 +31,9 @@ The clearest structure will come from separating these out.
 
 """
 
+def pprint_xml(element):
+    print etree.tostring(element,pretty_print=True)
+
 def clean_element(element):
     'preprocessing step: ETREE xpath selectors yield either elements, none types, or empty strings'
     if element is None:
@@ -94,21 +97,14 @@ def agency_definitions(root):
     """
     AGENCIES = root.findall("./RIN_INFO/AGENCY")
     PARENT_AGENCIES = root.findall("./RIN_INFO/PARENT_AGENCY")
-    out = set()
-    for A in AGENCIES + PARENT_AGENCIES:
-        # entry= {"CODE" : A.find("CODE").text.strip(),
-        # "NAME" : A.find("NAME").text.strip(),
-        # "ACRONYM" : A.find("ACRONYM").text.strip()
-        # }
-        entry= (clean_element(A.find("CODE")),
-                clean_element(A.find("NAME")),
-                clean_element(A.find("ACRONYM"))
-                )
-        out.add(entry)
-        
-    out = pd.DataFrame(list(out),columns=["CODE","NAME","ACRONYM"])
+    foo = set()
+    for a,p in zip(AGENCIES,PARENT_AGENCIES):
+        entry=map(lambda x: clean_element(a.find(x)),['CODE','NAME','ACRONYM'])  +\
+            map(lambda y: clean_element(p.find(y)),['CODE','NAME','ACRONYM'])
+        foo.add(tuple(entry))
+    out = pd.DataFrame(list(foo),columns=["CODE","NAME","ACRONYM",'PARENT_CODE','PARENT_NAME',"PARENT_ACRONYM"])
     out['PUBLICATION_ID'] = identify_publication_id(root)
-    return out
+    return out    
 
 def legal_authories(RIN_INFO):
     """
@@ -139,7 +135,22 @@ def parse_timetables(RIN_INFO):
         } for 
         TIMETABLE in TIMETABLES]
     return out
-    
+
+def parse_contacts(RIN_INFO):
+    "Another turns out to be important"
+    RIN, PUB_ID = generic_info(RIN_INFO)
+    CONTACTS = RIN_INFO.findall("AGENCY_CONTACT_LIST/CONTACT")
+    out = [{
+        "RIN" : clean_element(RIN),
+        "PUB_ID" : clean_element(PUB_ID),
+        "FIRST_NAME" : clean_element(CONTACT.find("FIRST_NAME")),
+        "LAST_NAME" : clean_element(CONTACT.find("LAST_NAME")),
+        "TITLE" : clean_element(CONTACT.find("TITLE")),
+        'AGENCY' : clean_element(CONTACT.find("AGENCY/CODE")),
+        'PHONE' : clean_element(CONTACT.find("PHONE")),
+        'EMAIL' : clean_element(CONTACT.find("EMAIL"))
+        } for CONTACT in CONTACTS]
+    return out
     
 def flatten_list(l):
     flat_list = []
@@ -159,17 +170,26 @@ def main(xml_path):
     set([i.tag for i in tree.findall("*/")])
     #write the main RINS table
     rins = pd.DataFrame(map(extract_flat_infos,RIN_INFOS))
-    rins.to_sql("RINS","sqlite:///agenda.sqlite",index=False,if_exists="append")
+    rins.columns = map(lambda x: x.lower(),rins.columns)
+    rins.to_sql("rins","sqlite:///agenda.sqlite",index=False,if_exists="append")
     #this is the list of legal authorities
     authorities = pd.DataFrame(flatten_list(map(legal_authories,RIN_INFOS)))
-    authorities.to_sql("LEGAL_AUTHORITIES","sqlite:///agenda.sqlite",index=False,if_exists="append")
+    authorities.columns = map(lambda x: x.lower(),authorities.columns)
+    authorities.to_sql("legal_authorities","sqlite:///agenda.sqlite",index=False,if_exists="append")
     #this is the list of rules 
     timetables = pd.DataFrame(flatten_list(map(parse_timetables,RIN_INFOS)))
-    timetables.to_sql("TIMETABLES","sqlite:///agenda.sqlite",index=False,if_exists="append")
+    timetables.columns = map(lambda x: x.lower(),timetables.columns)
+    timetables.to_sql("timetables","sqlite:///agenda.sqlite",index=False,if_exists="append")
+    #this is the list of contacts
+    contacts = pd.DataFrame(flatten_list(map(parse_contacts,RIN_INFOS)))
+    contacts.columns = map(lambda x: x.lower(),contacts.columns)
+    contacts.to_sql("contacts","sqlite:///agenda.sqlite",index=False,if_exists="append")
     #write the agency definitions 
     agency_defs =  agency_definitions(root)   
-    agency_defs.to_sql("AGENCY_DEFN","sqlite:///agenda.sqlite",index=False,if_exists="append")
+    agency_defs.columns = map(lambda x: x.lower(),agency_defs.columns)
+    agency_defs.to_sql("agency_defn","sqlite:///agenda.sqlite",index=False,if_exists="append")
 
 #here's where we actually run
-for xml_path in tqdm(glob("XMLs/*.xml")):
-    main(xml_path)
+if __name__=='__main__':
+    for xml_path in tqdm(glob("XMLs/*.xml")):
+        main(xml_path)

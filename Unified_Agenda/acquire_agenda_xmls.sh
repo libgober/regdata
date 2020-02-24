@@ -1,3 +1,4 @@
+wget https://www.reginfo.gov/public/do/XMLViewFileAction?f=REGINFO_RIN_DATA_201910.xml -O REGINFO_RIN_DATA_201910.xml
 wget https://www.reginfo.gov/public/do/XMLViewFileAction?f=REGINFO_RIN_DATA_201904.xml -O REGINFO_RIN_DATA_201904.xml
 wget https://www.reginfo.gov/public/do/XMLViewFileAction?f=REGINFO_RIN_DATA_201810.xml -O REGINFO_RIN_DATA_201810.xml
 wget https://www.reginfo.gov/public/do/XMLViewFileAction?f=2018-SPRING-RIN-DATA.xml -O 2018-SPRING-RIN-DATA.xml
