@@ -147,6 +147,7 @@ CURRENT STATUS
 ## Regulations.gov (rule metadata and comments)
 
 - Metadata for all rules, proposed rules, and notices ([.Rdata](https://github.com/judgelord/rulemaking/blob/master/data/AllRegsGovRules.Rdata))
+- R script to scrape attachments ([all file formats](https://github.com/judgelord/rulemaking/blob/master/functions/regulations-gov-get-attachments.R), pdf only
 ```
  [1] "agencyAcronym"           
  [2] "allowLateComment"        
@@ -168,6 +169,7 @@ CURRENT STATUS
 ```
 
 - Metadata for comments (sample, excluding attachment text)([.Rdata](https://github.com/judgelord/rulemaking/blob/master/data/allcomments-sample.Rdata))
+- [Scraper for comments posted to regulations.gov as attachments](https://github.com/judgelord/rulemaking/blob/master/functions/regulations-gov-get-attachments.R) [TODO: UPDATE THIS, MAKE IT INTO A TUTORIAL, ADD VERSION THAT DOES NOT REQUIRE API KEY]
 
 ## Agencies that do not host comments on Regulations.gov:
 
