@@ -10,7 +10,7 @@ Because of the constraints on large files, we are investigating options for stor
 - Devin Judge-Lord, PhD Candidate in Political Science at UW-Madison (JudgeLord@wisc.edu).
 
 ## Data Sources
-To access the data discusses in our paper 'Data and Methods Analyzing Special Interests Influence in Rulemaking' see the file data_sources.md in the menu above.
+To access the data discussed in our paper 'Data and Methods Analyzing Special Interests Influence in Rulemaking' see the file data_sources.md in the menu above.
 
 ## Federal Register
 
@@ -147,7 +147,7 @@ CURRENT STATUS
 ## Regulations.gov (rule metadata and comments)
 
 - Metadata for all rules, proposed rules, and notices ([.Rdata](https://github.com/judgelord/rulemaking/blob/master/data/AllRegsGovRules.Rdata))
-- R script to scrape attachments ([all file formats](https://github.com/judgelord/rulemaking/blob/master/functions/regulations-gov-get-attachments.R), pdf only
+- R script to scrape attachments ([all file formats](https://github.com/judgelord/rulemaking/blob/master/functions/regulations-gov-get-attachments.R), pdf only)
 ```
  [1] "agencyAcronym"           
  [2] "allowLateComment"        
